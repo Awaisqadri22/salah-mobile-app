@@ -5,7 +5,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  useWindowDimensions,
 } from 'react-native';
 import {
   PRAYERS,
@@ -90,14 +89,14 @@ export default function NamazTable() {
       </View>
 
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator
+        horizontal={true}
+        showsHorizontalScrollIndicator={true}
         style={styles.tableScroll}
         contentContainerStyle={styles.tableScrollContent}
       >
         <ScrollView
           style={[styles.verticalScroll, { width: tableWidth }]}
-          showsVerticalScrollIndicator
+          showsVerticalScrollIndicator={true}
         >
           {/* Table header */}
           <View style={[styles.row, styles.headerRow]}>
@@ -126,7 +125,7 @@ export default function NamazTable() {
                 </View>
                 {PRAYERS.map((prayer) => {
                   const key = completionKey(dateKey, prayer);
-                  const completed = completions[key];
+                  const completed = completions[key] === true;
                   return (
                     <TouchableOpacity
                       key={prayer}
@@ -137,10 +136,10 @@ export default function NamazTable() {
                       <View
                         style={[
                           styles.checkBox,
-                          completed && styles.checkBoxCompleted,
+                          completed ? styles.checkBoxCompleted : null,
                         ]}
                       >
-                        {completed && <Text style={styles.checkMark}>✓</Text>}
+                        {completed ? <Text style={styles.checkMark}>✓</Text> : null}
                       </View>
                     </TouchableOpacity>
                   );
